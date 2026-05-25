@@ -1,0 +1,994 @@
+/* ═══════════════════════════════════════════════
+   CSS Variables & Reset
+═══════════════════════════════════════════════ */
+:root {
+  --red:       #E02020;
+  --red-dark:  #B01818;
+  --red-light: #FF4444;
+  --orange:    #F5820A;
+  --green:     #1A9E5E;
+  --green-dark:#14854F;
+  --gray:      #555E6B;
+  --gray-mid:  #8B95A1;
+  --gray-light:#D8DCE2;
+  --bg:        #F4F5F7;
+  --white:     #FFFFFF;
+  --pink-bg:   #FDE8E8;
+  --rest-bg:   #222B35;
+
+  --font: 'Noto Sans TC', sans-serif;
+
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+
+  --shadow: 0 4px 24px rgba(0,0,0,0.10);
+  --shadow-lg: 0 8px 40px rgba(0,0,0,0.16);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  font-family: var(--font);
+  background: var(--bg);
+  color: #1A2230;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════
+   Page System（完美修復初始頁面不可見與錯位問題）
+═══════════════════════════════════════════════ */
+.page {
+  position: fixed;
+  inset: 0;
+  display: none;
+  opacity: 0;
+  transition: opacity 0.28s ease;
+  overflow: hidden;
+  
+  /* 預設關閉所有未啟用頁面的點擊，防止幽靈圖層干擾 */
+  pointer-events: none; 
+}
+
+/* ─── 關鍵修正：當頁面被設為 active 時，立刻給予實體 display、不透明度與觸控權 ─── */
+.page.active {
+  display: flex;
+  opacity: 1 !important;     /* 強制讓 active 的頁面 100% 顯現，修正初始化透明度 0 的 Bug */
+  pointer-events: auto;      /* 讓當前 active 的頁面可以被精準點擊 */
+}
+
+/* 確保當 JS 正在進行淡出動畫（將 opacity 設為 0）時，立刻沒收該頁面的點擊權 */
+.page[style*="opacity: 0"],
+.page[style*="opacity: 0;"] {
+  pointer-events: none !important;
+}
+
+/* ═══════════════════════════════════════════════
+   Buttons
+═══════════════════════════════════════════════ */
+button { cursor: pointer; font-family: var(--font); border: none; outline: none; }
+
+.btn-outline-red,
+.btn-outline-orange,
+.btn-outline-green,
+.btn-outline-gray,
+.btn-ghost {
+  display: block;
+  width: 100%;
+  padding: 18px 24px;
+  border-radius: var(--radius-md);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+  background: var(--white);
+}
+.btn-outline-red    { border: 2.5px solid var(--red);    color: var(--red);    }
+.btn-outline-orange { border: 2.5px solid var(--orange);  color: var(--orange); }
+.btn-outline-green  { border: 2.5px solid var(--green);   color: var(--green);  }
+.btn-outline-gray   { border: 2.5px solid var(--gray);    color: var(--gray);   }
+.btn-ghost          { border: 2.5px solid var(--gray-light); color: var(--gray-mid); background: transparent; }
+
+.btn-outline-red:active    { background: var(--red);    color: var(--white); transform: scale(0.97); }
+.btn-outline-orange:active { background: var(--orange);  color: var(--white); transform: scale(0.97); }
+.btn-outline-green:active  { background: var(--green);   color: var(--white); transform: scale(0.97); }
+.btn-outline-gray:active   { background: var(--gray);    color: var(--white); transform: scale(0.97); }
+.btn-ghost:active          { background: var(--gray-light); transform: scale(0.97); }
+
+.btn-filled-red {
+  display: block;
+  padding: 18px 24px;
+  border-radius: var(--radius-md);
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.02em;
+  background: var(--red);
+  color: var(--white);
+  border: none;
+  transition: transform 0.12s, box-shadow 0.12s;
+}
+.btn-filled-red:active { transform: scale(0.97); background: var(--red-dark); }
+
+.btn-big {
+  padding: 28px 36px;
+  font-size: 22px;
+  border-radius: 20px;
+}
+
+.btn-home {
+  background: transparent;
+  border: none;
+  width: 44px; height: 44px;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--gray-mid);
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+.btn-home:active { background: var(--gray-light); }
+.btn-home svg { width: 24px; height: 24px; }
+
+/* ═══════════════════════════════════════════════
+   Page 1 — Splash (各自獨立，絕對不互相污染)
+═══════════════════════════════════════════════ */
+.layout-splash-container {
+  background: var(--bg);
+}
+.layout-splash-container .splash-left {
+  position: relative;
+  width: 54%;
+  display: flex;
+  align-items: flex-end; /* 文字沉在左下角 */
+  padding: 48px 36px;
+  overflow: hidden;
+}
+.layout-splash-container .splash-blob {
+  position: absolute;
+  top: -60px; left: -80px;
+  width: 480px; height: 480px;
+  background: radial-gradient(ellipse at 40% 40%, var(--red) 0%, #C0181830 70%, transparent 100%);
+  border-radius: 50%;
+  opacity: 0.18;
+  filter: blur(2px);
+}
+.layout-splash-container .splash-title {
+  position: relative;
+  z-index: 1;
+}
+.layout-splash-container .splash-sub {
+  font-size: 14px; font-weight: 500; color: var(--red); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 8px;
+}
+.layout-splash-container .splash-title h1 {
+  font-size: clamp(42px, 7vw, 72px); font-weight: 900; color: #1A2230; line-height: 1.05;
+}
+.layout-splash-container .splash-right {
+  width: 46%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* 按鈕在右下角 */
+  align-items: stretch;
+  padding: 48px 36px;
+  gap: 14px;
+}
+
+/* ═══════════════════════════════════════════════
+   Page 2 / 12 — Split Left Blob
+═══════════════════════════════════════════════ */
+.layout-split-left-blob {
+  flex-direction: row;
+  background: var(--white);
+}
+
+.split-left {
+  position: relative;
+  width: 44%;
+  background: var(--red);
+  display: flex;
+  align-items: flex-end;
+  padding: 44px 32px;
+  overflow: hidden;
+}
+
+.split-blob {
+  position: absolute;
+  top: -100px;
+  right: -80px;
+  width: 360px;
+  height: 360px;
+  background: rgba(255,255,255,0.12);
+  border-radius: 50%;
+}
+
+.split-question {
+  position: relative;
+  z-index: 1;
+}
+.split-question h2 {
+  font-size: clamp(22px, 4vw, 34px);
+  font-weight: 900;
+  color: var(--white);
+  line-height: 1.25;
+}
+
+.split-right {
+  width: 56%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 48px 36px;
+  gap: 16px;
+}
+
+/* Home button inside split-left */
+.btn-home.split-home,
+.split-left .btn-home {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: rgba(255,255,255,0.7);
+  z-index: 2;
+}
+.split-left .btn-home:active { background: rgba(255,255,255,0.2); }
+
+/* ═══════════════════════════════════════════════
+   Pages 3–9 — Teaching
+═══════════════════════════════════════════════ */
+.layout-teach {
+  flex-direction: row;
+  background: var(--white);
+}
+
+.teach-left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 36px;
+  gap: 18px;
+}
+
+.teach-label {
+  display: inline-block;
+  background: var(--red);
+  color: var(--white);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  width: fit-content;
+}
+
+.teach-step {
+  font-size: clamp(18px, 3vw, 28px);
+  font-weight: 900;
+  line-height: 1.3;
+  color: #1A2230;
+}
+
+.teach-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.teach-list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--gray);
+}
+.teach-list li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 10px;
+  width: 8px; height: 8px;
+  background: var(--red);
+  border-radius: 50%;
+}
+
+.teach-nav {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.nav-arrow {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--gray-light);
+  background: var(--white);
+  color: var(--gray);
+  font-size: 28px;
+  line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+}
+.nav-arrow:active { background: var(--red); border-color: var(--red); color: var(--white); transform: scale(0.93); }
+
+.teach-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pink-bg);
+}
+
+/* Placeholder images */
+.teach-img {
+  width: 80%;
+  height: 70%;
+  border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, #FFD6D6 0%, #FFECEC 100%);
+  display: flex; align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+.teach-img::after {
+  content: attr(data-label);
+  position: absolute;
+  font-size: 13px;
+  color: var(--red);
+  font-weight: 700;
+  opacity: 0.5;
+}
+
+/* Specific image placeholders with distinct patterns */
+.teach-img-1::before  { content: '🙋'; font-size: 64px; }
+.teach-img-6::before  { content: '📞'; font-size: 64px; }
+.teach-img-7::before  { content: '🤲'; font-size: 64px; }
+.teach-img-8::before  { content: '💗'; font-size: 64px; }
+.teach-img-14-2::before { content: '📱'; font-size: 64px; }
+.teach-img-15::before { content: '🫲'; font-size: 64px; }
+
+/* Two-column variant (page 9) */
+.teach-two-col .teach-left {
+  width: 40%;
+}
+.teach-right-info {
+  width: 60% !important;
+  background: var(--white) !important;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 32px;
+  gap: 28px;
+}
+
+.info-block {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-stage {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-left: 3px solid var(--red);
+  padding-left: 10px;
+}
+
+/* ═══════════════════════════════════════════════
+   Page 10 — End of Teaching
+═══════════════════════════════════════════════ */
+.layout-end {
+  flex-direction: column;
+  background: var(--white);
+}
+
+.end-top {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--red);
+  position: relative;
+  overflow: hidden;
+}
+.end-top::before {
+  content: '';
+  position: absolute;
+  width: 400px; height: 400px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  top: -120px; right: -80px;
+}
+.end-top h2 {
+  font-size: clamp(32px, 6vw, 56px);
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: 0.04em;
+  position: relative;
+  z-index: 1;
+}
+
+.end-bottom {
+  padding: 40px 48px;
+  display: flex;
+  gap: 16px;
+}
+.end-bottom .btn-outline-green,
+.end-bottom .btn-outline-red { flex: 1; }
+
+/* ═══════════════════════════════════════════════
+   Page 11 — Main CPR (獨立的垂直置中佈局)
+═══════════════════════════════════════════════ */
+.layout-main-container {
+  background: var(--bg);
+  align-items: center; /* 左右雙欄垂直置中 */
+}
+.layout-main-container .main-sidebar {
+  width: 72px; height: 100%; background: var(--white);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; /* 圖標垂直置中 */
+  padding: 24px 0; gap: 24px; box-shadow: 2px 0 12px rgba(0,0,0,0.06); z-index: 2;
+}
+.layout-main-container .sidebar-icon {
+  width: 44px; height: 44px; border-radius: var(--radius-sm); background: transparent; color: var(--gray-mid);
+  display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s;
+}
+.layout-main-container .sidebar-icon svg { width: 22px; height: 22px; }
+.layout-main-container .sidebar-icon:active { background: var(--pink-bg); color: var(--red); }
+
+.layout-main-container .main-content {
+  flex: 1; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; /* 右側內容垂直置中 */
+  gap: 20px; z-index: 2;
+}
+.layout-main-container .cpr-circle {
+  width: clamp(160px, 38vw, 240px); height: clamp(160px, 38vw, 240px); border-radius: 50%; background: var(--red); color: var(--white);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  box-shadow: 0 0 0 12px rgba(224,32,32,0.12), 0 0 0 24px rgba(224,32,32,0.06); border: none;
+  transition: transform 0.15s, box-shadow 0.15s; animation: pulse-ring 2.4s ease-in-out infinite;
+}
+.layout-main-container .cpr-circle:active { transform: scale(0.93); box-shadow: 0 0 0 6px rgba(224,32,32,0.14); }
+@keyframes pulse-ring {
+  0%, 100% { box-shadow: 0 0 0 12px rgba(224,32,32,0.12), 0 0 0 24px rgba(224,32,32,0.06); }
+  50%       { box-shadow: 0 0 0 18px rgba(224,32,32,0.16), 0 0 0 36px rgba(224,32,32,0.04); }
+}
+.layout-main-container .cpr-big { font-size: clamp(32px, 7vw, 52px); font-weight: 900; letter-spacing: 0.04em; }
+.layout-main-container .cpr-small { font-size: 11px; font-weight: 500; opacity: 0.85; letter-spacing: 0.06em; margin-top: 4px; }
+.layout-main-container .main-hint { font-size: 13px; color: var(--gray-mid); letter-spacing: 0.04em; }
+.layout-main-container .main-blob {
+  position: absolute; bottom: -120px; right: -100px; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(224,32,32,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════════
+   Pages 13 — Vertical Procedure (Page 13)
+═══════════════════════════════════════════════ */
+#page-13.layout-procedure {
+  position: fixed;       /* ─── 關鍵修正：確保鎖死在螢幕四周 ─── */
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--white);
+  width: 100vw;
+  height: 100vh;         /* ─── 關鍵修正：強制撐滿全螢幕 ─── */
+  overflow: hidden;
+}
+#page-13.layout-procedure.active {
+  display: flex;
+}
+
+#page-13 .proc-top {
+  flex: 1;
+  background: var(--pink-bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 32px;
+  gap: 16px;
+}
+
+#page-13 .proc-image {
+  width: 120px; height: 120px;
+  border-radius: var(--radius-lg);
+  background: rgba(224,32,32,0.10);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 56px;
+}
+#page-13 .proc-image-1::before { content: '🙋'; }
+
+#page-13 .proc-title {
+  font-size: clamp(18px, 3.5vw, 28px);
+  font-weight: 900;
+  color: #1A2230;
+  text-align: center;
+}
+
+#page-13 .proc-bottom {
+  padding: 24px 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#page-13 .proc-buttons {
+  display: flex;
+  gap: 14px;
+}
+#page-13 .proc-buttons .btn-outline-green,
+#page-13 .proc-buttons .btn-filled-red { flex: 1; }
+
+#page-13 .proc-home {
+  position: absolute;
+  bottom: 20px; left: 20px;
+}
+
+/* ═══════════════════════════════════════════════
+   Pages 14-1, 14-2, 15, 16 — Wide Procedure (左右雙欄流程)
+   （精準限定 ID，解決畫面上移與點擊地圖錯位）
+═══════════════════════════════════════════════ */
+#page-14-1.layout-procedure-wide,
+#page-14-2.layout-procedure-wide,
+#page-15.layout-procedure-wide,
+#page-16.layout-procedure-wide {
+  position: fixed;       /* ─── 關鍵修正：從 relative 改回 fixed，徹底隔離幽靈圖層 ─── */
+  inset: 0;
+  display: none;
+  flex-direction: row;
+  background: var(--white);
+  width: 100vw;
+  height: 100vh;         /* ─── 關鍵修正：鎖定滿版高度，解決畫面往上跑 ─── */
+  overflow: hidden;
+}
+
+/* 只有在 active 狀態下才啟用 flex 佈局 */
+#page-14-1.layout-procedure-wide.active,
+#page-14-2.layout-procedure-wide.active,
+#page-15.layout-procedure-wide.active,
+#page-16.layout-procedure-wide.active {
+  display: flex;
+}
+
+/* 保持你原本完美的內部屬性設定，但加上後代限制確保不污染 */
+#page-14-1 .proc-wide-left,
+#page-14-2 .proc-wide-left,
+#page-15 .proc-wide-left,
+#page-16 .proc-wide-left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 讓左側文字垂直置中 */
+  padding: 40px 36px;
+  gap: 16px;
+}
+
+#page-14-1 .proc-wide-right,
+#page-14-2 .proc-wide-right,
+#page-15 .proc-wide-right,
+#page-16 .proc-wide-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 讓右側內容垂直置中 */
+}
+
+/* 獨立控制各頁面的粉紅背景，絕不混淆 */
+#page-14-1 .alert-panel { flex-direction: column; gap: 20px; }
+#page-14-1 .proc-wide-pink,
+#page-16 .proc-wide-pink {
+  background: var(--pink-bg);
+}
+
+#page-14-2 .teach-img,
+#page-15 .teach-img {
+  width: 75%;
+  height: 65%;
+}
+
+/* ═══════════════════════════════════════════════
+   全域流程元件（共用細節樣式）
+═══════════════════════════════════════════════ */
+.proc-subtitle {
+  font-size: 12px; font-weight: 600; color: var(--red); letter-spacing: 0.1em; text-transform: uppercase;
+}
+.proc-title-lg {
+  font-size: clamp(22px, 4vw, 34px); font-weight: 900; color: #1A2230; line-height: 1.2;
+}
+.proc-title-xl {
+  font-size: clamp(36px, 7vw, 56px); font-weight: 900; color: var(--red); line-height: 1.1;
+}
+.proc-subtitle-lg {
+  font-size: clamp(16px, 2.5vw, 22px); font-weight: 500; color: var(--gray);
+}
+.alert-hint {
+  font-size: 13px; color: var(--gray-mid); text-align: center; padding: 0 24px;
+}
+.auto-jump {
+  font-size: 14px; color: var(--gray-mid); line-height: 1.6;
+}
+.countdown-num {
+  font-size: 18px; font-weight: 900; color: var(--red);
+}
+
+/* 進度點定位限制 */
+.progress-dots {
+  position: absolute;
+  bottom: 24px; right: 24px;
+  display: flex; gap: 8px; align-items: center;
+  z-index: 10;
+}
+.progress-dots-vert {
+  flex-direction: column;
+  right: 20px; top: 50%; bottom: auto;
+  transform: translateY(-50%);
+}
+.dot {
+  width: 8px; height: 8px; border-radius: 50%; background: var(--gray-light); transition: background 0.3s, transform 0.3s;
+}
+.dot-active { background: var(--red); transform: scale(1.25); }
+.dot-white { background: rgba(255,255,255,0.3); }
+.dot-white.dot-active { background: var(--white); }
+
+/* ═══════════════════════════════════════════════
+   Pages 17/19/21/23 — Timer (Press) 
+   （精準限定 ID，徹底解決全域覆蓋、畫面上移問題）
+═══════════════════════════════════════════════ */
+#page-17.layout-timer,
+#page-19.layout-timer,
+#page-21.layout-timer,
+#page-23.layout-timer {
+  position: fixed;       /* ─── 關鍵修正：鎖死在四周，防禦幽靈重疊 ─── */
+  inset: 0;
+  display: none;
+  flex-direction: row;
+  background: var(--white);
+  width: 100vw;
+  height: 100vh;         /* ─── 關鍵修正：鎖定全螢幕高度，絕不往上跑 ─── */
+  overflow: hidden;
+}
+
+/* 只有在 active 狀態下才啟用 flex 置中佈局 */
+#page-17.layout-timer.active,
+#page-19.layout-timer.active,
+#page-21.layout-timer.active,
+#page-23.layout-timer.active {
+  display: flex;
+}
+
+/* 將所有子元件加上精準 ID 限制 */
+#page-17 .timer-left, 
+#page-19 .timer-left, 
+#page-21 .timer-left, 
+#page-23 .timer-left {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 讓數字在左半邊完美垂直置中 */
+  padding: 40px 36px;
+  gap: 12px;
+}
+
+#page-17 .timer-left-pink, 
+#page-19 .timer-left-pink, 
+#page-21 .timer-left-pink, 
+#page-23 .timer-left-pink { 
+  background: var(--pink-bg); 
+}
+
+.timer-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--red);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.timer-count {
+  font-size: clamp(72px, 14vw, 120px);
+  font-weight: 900;
+  color: var(--red);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+.timer-desc {
+  font-size: 14px;
+  color: var(--gray);
+  line-height: 1.6;
+}
+
+#page-17 .timer-right, 
+#page-19 .timer-right, 
+#page-21 .timer-right, 
+#page-23 .timer-right {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* 讓右半邊手勢動畫完美垂直置中 */
+  background: var(--white);
+}
+
+/* ─── 手勢動畫細節維持不變 ─── */
+.hand-animation {
+  width: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+}
+
+.hand-top {
+  width: 80px; height: 60px;
+  background: #F5C4C4;
+  border-radius: 40% 40% 10% 10%;
+  position: relative;
+  animation: press-down 1s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+
+.hand-bottom {
+  width: 100px; height: 40px;
+  background: #FFD6D6;
+  border-radius: 10px;
+}
+
+.hand-lines {
+  width: 60px; height: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 2px 0;
+}
+
+@keyframes press-down {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  45%       { transform: translateY(14px) scaleY(0.88); }
+  55%       { transform: translateY(14px) scaleY(0.88); }
+}
+
+.phase2 .hand-lines {
+  display: flex;
+}
+.hand-lines::before,
+.hand-lines::after {
+  content: '';
+  display: block;
+  width: 100%; height: 2px;
+  background: var(--gray-light);
+  border-radius: 2px;
+}
+
+/* ═══════════════════════════════════════════════
+   Pages 18/20/22/24 — Rest
+   （精準限定 ID，解決全黑休息頁高度與置中）
+═══════════════════════════════════════════════ */
+#page-18.layout-rest,
+#page-20.layout-rest,
+#page-22.layout-rest,
+#page-24.layout-rest {
+  position: fixed;       /* ─── 關鍵修正：強制全黑頁面滿版鎖死 ─── */
+  inset: 0;
+  display: none;
+  flex-direction: column;
+  background: var(--rest-bg);
+  align-items: center;
+  justify-content: center; /* ─── 關鍵修正：讓「休息」文字完美上下置中 ─── */
+  gap: 24px;
+  width: 100vw;
+  height: 100vh;         /* ─── 關鍵修正：撐滿全螢幕高度 ─── */
+  overflow: hidden;
+}
+
+/* 只有在 active 狀態下才啟用 flex */
+#page-18.layout-rest.active,
+#page-20.layout-rest.active,
+#page-22.layout-rest.active,
+#page-24.layout-rest.active {
+  display: flex;
+}
+
+.rest-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.rest-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.12em;
+}
+
+.rest-main {
+  font-size: clamp(28px, 6vw, 48px);
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: 0.02em;
+}
+
+.progress-dots-white {
+  position: absolute;
+  right: 24px;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
+  flex-direction: column;
+  z-index: 10;
+}
+
+/* ═══════════════════════════════════════════════
+   Modals
+═══════════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.50);
+  backdrop-filter: blur(4px);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  animation: fade-in 0.2s ease;
+}
+.modal-overlay.open { display: flex; }
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modal-card {
+  background: var(--white);
+  border-radius: var(--radius-lg);
+  padding: 32px 28px;
+  width: min(360px, 90vw);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: var(--shadow-lg);
+  animation: slide-up 0.25s ease;
+}
+
+@keyframes slide-up {
+  from { transform: translateY(20px); opacity: 0; }
+  to   { transform: translateY(0); opacity: 1; }
+}
+
+.modal-card-gray { background: #F0F2F5; }
+
+.modal-hint {
+  font-size: 15px;
+  color: var(--gray);
+  text-align: center;
+  line-height: 1.5;
+  padding: 0 4px 4px;
+}
+
+/* Phone call modal */
+.modal-call-btn {
+  width: 100%;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  background: var(--green);
+  color: var(--white);
+  font-size: 20px;
+  font-weight: 700;
+  font-family: var(--font);
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.15s, transform 0.12s;
+}
+.modal-call-btn::before { content: '📞'; font-size: 22px; }
+.modal-call-btn:active { background: var(--green-dark); transform: scale(0.97); }
+
+.modal-cancel-btn {
+  width: 100%;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  background: transparent;
+  color: var(--gray-mid);
+  font-size: 15px;
+  font-weight: 500;
+  font-family: var(--font);
+  border: 2px solid var(--gray-light);
+  transition: background 0.15s;
+}
+.modal-cancel-btn:active { background: var(--gray-light); }
+
+/* ═══════════════════════════════════════════════
+   Responsive & Phone Viewport Overrides (RWD 修正區)
+═══════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .layout-splash-container .splash-left { width: 48%; padding: 32px 20px; }
+  .layout-splash-container .splash-right { width: 52%; padding: 32px 20px; gap: 12px; }
+  .btn-outline-red, .btn-outline-orange, .btn-outline-green, .btn-outline-gray, .btn-ghost { font-size: 15px; padding: 15px 18px; }
+  .teach-left { padding: 28px 20px; }
+  .teach-step { font-size: 17px; }
+  .timer-count { font-size: 72px; }
+  .rest-main { font-size: 28px; }
+}
+
+@media (max-width: 420px) {
+  /* ─── 1. 核心修正：確保手機版直向時，這些頁面依然是強實體滿版，絕不上縮 ─── */
+  .layout-splash-container, 
+  .layout-split-left-blob, 
+  .layout-teach, 
+  .layout-procedure-wide, 
+  #page-17.layout-timer, 
+  #page-19.layout-timer, 
+  #page-21.layout-timer, 
+  #page-23.layout-timer,
+  #page-18.layout-rest,
+  #page-20.layout-rest,
+  #page-22.layout-rest,
+  #page-24.layout-rest {
+    flex-direction: column !important;
+    position: fixed !important;
+    inset: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important; /* 強制手機直向也是 100% 滿版高度 */
+    display: flex !important;
+  }
+
+  /* ─── 2. 手機版直向時的左右（此時變上下）比例微調 ─── */
+  .layout-splash-container .splash-left, 
+  .layout-splash-container .splash-right,
+  .split-left, 
+  .split-right, 
+  .teach-left, 
+  .teach-right { 
+    width: 100% !important; 
+  }
+
+  /* ─── 3. 計時頁面在手機直向時的上下欄位調整 ─── */
+  #page-17 .timer-left, 
+  #page-19 .timer-left, 
+  #page-21 .timer-left, 
+  #page-23 .timer-left {
+    width: 100% !important;
+    height: 50% !important;   /* 上半部放數字 */
+    align-items: center;
+    text-align: center;
+    padding: 40px 24px 20px;
+  }
+
+  #page-17 .timer-right, 
+  #page-19 .timer-right, 
+  #page-21 .timer-right, 
+  #page-23 .timer-right {
+    width: 100% !important;
+    height: 50% !important;   /* 下半部放按壓動畫 */
+    padding-bottom: 40px;
+  }
+
+  /* ─── 其他維持你原本的設定 ─── */
+  .layout-splash-container .splash-left { min-height: 40vh; }
+  .split-left  { min-height: 38vh; }
+  .teach-right { min-height: 220px; }
+  .timer-right { min-height: 180px; }
+  
+  .progress-dots-vert { 
+    flex-direction: row !important; 
+    top: auto !important; 
+    right: auto !important; 
+    bottom: 16px !important; 
+    left: 50% !important; 
+    transform: translateX(-50%) !important; 
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   隱藏計時頁面的倒數大數字（維持 JS 正常運作）
+═══════════════════════════════════════════════ */
+#page-17 .timer-count,
+#page-19 .timer-count,
+#page-21 .timer-count,
+#page-23 .timer-count {
+  display: none !important; /* 強制不顯示倒數數字 */
+}

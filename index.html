@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>間歇性心肺復甦術</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════
+     頁面 1 — 啟動頁（Splash）
+══════════════════════════════════════════ -->
+<section id="page-1" class="page active layout-splash-container">
+  <div class="splash-blob"></div>
+  <div class="splash-left">
+    <div class="splash-title">
+      <p class="splash-sub">CPR Assistant</p>
+      <h1>間歇性<br>心肺復甦術</h1>
+    </div>
+  </div>
+  <div class="splash-right">
+    <button class="btn-outline-red btn-big" onclick="showPage('page-2')">進入教學</button>
+    <button class="btn-ghost" onclick="openModal('modal-2-1')">略過</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 2 — 熟悉度選擇
+══════════════════════════════════════════ -->
+<section id="page-2" class="page layout-split-left-blob">
+  <div class="split-left">
+    <div class="split-blob"></div>
+    <div class="split-question">
+      <h2>是否熟悉<br>間歇性心肺復甦術</h2>
+    </div>
+  </div>
+  <div class="split-right">
+    <button class="btn-outline-red"    onclick="showPage('page-3')">完全不會</button>
+    <button class="btn-outline-orange" onclick="showPage('page-9')">熟悉心肺復甦術</button>
+    <button class="btn-outline-green"  onclick="openModal('modal-2-1')">熟悉間歇性心肺復甦術</button>
+  </div>
+</section>
+
+<!-- 彈窗 2-1 -->
+<div id="modal-2-1" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-2-1')">
+  <div class="modal-card">
+    <button class="btn-outline-green" onclick="closeModal('modal-2-1');showPage('page-3')">重新教學</button>
+    <button class="btn-outline-red"   onclick="closeModal('modal-2-1');showPage('page-11')">流程教學</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     頁面 3 — 教學：確認意識（只有 › 箭頭）
+══════════════════════════════════════════ -->
+<section id="page-3" class="page layout-teach">
+  <div class="teach-left">
+    <span class="teach-label">教學</span>
+    <h2 class="teach-step">1. 確認意識與環境安全</h2>
+    <ul class="teach-list">
+      <li>確保環境安全：遠離車流、水電危險</li>
+      <li>輕拍雙肩：大聲呼喚「喂！你怎麼了？」</li>
+    </ul>
+    <div class="teach-nav">
+      <button class="nav-arrow" onclick="showPage('page-6')">›</button>
+    </div>
+  </div>
+  <div class="teach-right">
+    <div class="teach-img teach-img-1"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 6 — 教學：撥打119（‹ › 箭頭）
+══════════════════════════════════════════ -->
+<section id="page-6" class="page layout-teach">
+  <div class="teach-left">
+    <span class="teach-label">教學</span>
+    <h2 class="teach-step">2. 撥打119</h2>
+    <ul class="teach-list">
+      <li>撥打119</li>
+      <li>告知地址、病患目前情況</li>
+    </ul>
+    <div class="teach-nav">
+      <button class="nav-arrow" onclick="showPage('page-3')">‹</button>
+      <button class="nav-arrow" onclick="showPage('page-7')">›</button>
+    </div>
+  </div>
+  <div class="teach-right">
+    <div class="teach-img teach-img-6"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 7 — 教學：按壓方式（跪姿）
+══════════════════════════════════════════ -->
+<section id="page-7" class="page layout-teach">
+  <div class="teach-left">
+    <span class="teach-label">教學</span>
+    <h2 class="teach-step">3. 按壓方式</h2>
+    <ul class="teach-list">
+      <li>雙手交疊，扣住五指</li>
+      <li>跪姿在患者旁側</li>
+      <li>雙臂打直，身體前傾</li>
+    </ul>
+    <div class="teach-nav">
+      <button class="nav-arrow" onclick="showPage('page-6')">‹</button>
+      <button class="nav-arrow" onclick="showPage('page-8')">›</button>
+    </div>
+  </div>
+  <div class="teach-right">
+    <div class="teach-img teach-img-7"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 8 — 教學：按壓位置（胸骨）
+══════════════════════════════════════════ -->
+<section id="page-8" class="page layout-teach">
+  <div class="teach-left">
+    <span class="teach-label">教學</span>
+    <h2 class="teach-step">3. 按壓方式</h2>
+    <ul class="teach-list">
+      <li>掌根對準兩乳頭連線中點</li>
+      <li>雙臂打直，開始按壓</li>
+    </ul>
+    <div class="teach-nav">
+      <button class="nav-arrow" onclick="showPage('page-7')">‹</button>
+      <button class="nav-arrow" onclick="showPage('page-9')">›</button>
+    </div>
+  </div>
+  <div class="teach-right">
+    <div class="teach-img teach-img-8"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 9 — 教學：間歇性按壓步驟（雙欄資訊）
+══════════════════════════════════════════ -->
+<section id="page-9" class="page layout-teach teach-two-col">
+  <div class="teach-left">
+    <span class="teach-label">教學</span>
+    <h2 class="teach-step">4. 間歇性心肺復甦術<br>按壓步驟</h2>
+    <div class="teach-nav">
+      <button class="nav-arrow" onclick="showPage('page-8')">‹</button>
+      <button class="nav-arrow" onclick="showPage('page-10')">›</button>
+    </div>
+  </div>
+  <div class="teach-right teach-right-info">
+    <div class="info-block">
+      <p class="info-stage">階段一</p>
+      <ul class="teach-list">
+        <li>持續按壓兩分鐘後</li>
+        <li>休息3秒</li>
+        <li>開始進行階段二</li>
+      </ul>
+    </div>
+    <div class="info-block">
+      <p class="info-stage">階段二</p>
+      <ul class="teach-list">
+        <li>間歇性按壓為按壓15秒</li>
+        <li>休息3秒</li>
+        <li>重複進行按壓15秒休息3秒</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 10 — 教學結束
+══════════════════════════════════════════ -->
+<section id="page-10" class="page layout-end">
+  <div class="end-top">
+    <h2>教學結束</h2>
+  </div>
+  <div class="end-bottom">
+    <button class="btn-outline-green" onclick="showPage('page-3')">重新教學</button>
+    <button class="btn-outline-red"   onclick="showPage('page-11')">流程教學</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 11 — 主畫面（CPR 紅圓）
+══════════════════════════════════════════ -->
+<section id="page-11" class="page layout-main-container">
+  <aside class="main-sidebar">
+    <button class="sidebar-icon" title="教學">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+        <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+        <line x1="10" y1="10" x2="14" y2="10"/>
+      </svg>
+    </button>
+    <button class="sidebar-icon" title="設定">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </button>
+  </aside>
+  <div class="main-content">
+    <button class="cpr-circle" onclick="showPage('page-12')">
+      <span class="cpr-big">CPR</span>
+      <span class="cpr-small">間歇性心肺復甦術</span>
+    </button>
+    <p class="main-hint">點入後請跟著指示實施</p>
+  </div>
+  <div class="main-blob"></div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 12 — 現場實施人員
+══════════════════════════════════════════ -->
+<section id="page-12" class="page layout-split-left-blob">
+  <div class="split-left">
+    <div class="split-blob"></div>
+    <button class="btn-home split-home" onclick="showPage('page-11')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+        <polyline points="9 21 9 12 15 12 15 21"/>
+      </svg>
+    </button>
+    <div class="split-question">
+      <h2>現場實施人員</h2>
+    </div>
+  </div>
+  <div class="split-right">
+    <button class="btn-outline-gray" onclick="showPage('page-13')">單人</button>
+    <button class="btn-outline-gray" onclick="showPage('page-13')">雙人</button>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 13 — 流程步驟1：確認意識
+══════════════════════════════════════════ -->
+<section id="page-13" class="page layout-procedure" style="position:relative">
+  <div class="proc-top">
+    <div class="proc-image proc-image-1"></div>
+    <h2 class="proc-title">1. 確認意識與環境安全</h2>
+    <ul class="teach-list" style="text-align:left;width:100%;max-width:320px">
+      <li>確保環境安全：遠離車流、水電危險</li>
+      <li>輕拍雙肩：大聲呼喚「喂！你怎麼了？」</li>
+    </ul>
+  </div>
+  <div class="proc-bottom">
+    <div class="proc-buttons">
+      <button class="btn-outline-green" onclick="openModal('modal-13-1')">正常呼吸</button>
+      <button class="btn-filled-red"    onclick="openModal('modal-13-2')">異常呼吸<br><small style="font-size:0.8em;font-weight:500">(無呼吸)</small></button>
+    </div>
+  </div>
+  <button class="btn-home proc-home" onclick="showPage('page-11')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <polyline points="9 21 9 12 15 12 15 21"/>
+    </svg>
+  </button>
+  <!-- 進度點 -->
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</section>
+
+<!-- 彈窗 13-1：正常呼吸 → 通話119 → page-14-1 -->
+<div id="modal-13-1" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-13-1')">
+  <div class="modal-card">
+    <p class="modal-hint">病患呼吸正常，請撥打119並持續觀察</p>
+    <button class="modal-call-btn" onclick="closeModal('modal-13-1');showPage('page-14-1')">通話 119</button>
+    <button class="modal-cancel-btn" onclick="closeModal('modal-13-1')">取消</button>
+  </div>
+</div>
+
+<!-- 彈窗 13-2：異常呼吸 → 通話119 → page-14-2 -->
+<div id="modal-13-2" class="modal-overlay" onclick="if(event.target===this)closeModal('modal-13-2')">
+  <div class="modal-card">
+    <p class="modal-hint">病患呼吸異常，請立即撥打119並開始CPR</p>
+    <button class="modal-call-btn" onclick="closeModal('modal-13-2');showPage('page-14-2')">通話 119</button>
+    <button class="modal-cancel-btn" onclick="closeModal('modal-13-2')">取消</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     頁面 14-1 — 正常呼吸：等待觀察
+══════════════════════════════════════════ -->
+<section id="page-14-1" class="page layout-procedure-wide" style="position:relative">
+  <div class="proc-wide-left alert-panel">
+    <p class="proc-subtitle">已撥打急救電話請繼續執行步驟</p>
+    <h2 class="proc-title-lg">注意事項</h2>
+    <ul class="teach-list">
+      <li>已撥打急救電話</li>
+      <li>持續觀察病患</li>
+      <li>等待救護人員到達</li>
+    </ul>
+  </div>
+  <div class="proc-wide-right proc-wide-pink" style="flex-direction:column;gap:16px;padding:32px">
+    <button class="btn-filled-red btn-big" onclick="showPage('page-13')" style="width:100%">
+      異常呼吸<br><small style="font-size:0.8em;font-weight:500">(無呼吸)</small>
+    </button>
+    <p class="alert-hint">※如病患有異常請立即點擊按鈕</p>
+  </div>
+  <button class="btn-home proc-home" onclick="showPage('page-11')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <polyline points="9 21 9 12 15 12 15 21"/>
+    </svg>
+  </button>
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 14-2 — 異常呼吸：手機擺放（5秒自動跳轉）
+══════════════════════════════════════════ -->
+<section id="page-14-2" class="page layout-procedure-wide" style="position:relative">
+  <div class="proc-wide-left">
+    <p class="proc-subtitle">已撥打急救電話請繼續執行步驟</p>
+    <h2 class="proc-title-lg">2. 手機擺放位置</h2>
+    <ul class="teach-list">
+      <li>請將手機放置患者前方（如右圖所示）</li>
+    </ul>
+    <p class="auto-jump">
+      畫面將於
+      <span class="countdown-num" id="countdown-14-2">5</span>
+      秒後自動切換下一頁
+    </p>
+  </div>
+  <div class="proc-wide-right">
+    <div class="teach-img teach-img-14-2"></div>
+  </div>
+  <button class="btn-home proc-home" onclick="showPage('page-11')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <polyline points="9 21 9 12 15 12 15 21"/>
+    </svg>
+  </button>
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 15 — 按壓方式說明（10秒自動跳轉）
+══════════════════════════════════════════ -->
+<section id="page-15" class="page layout-procedure-wide" style="position:relative">
+  <div class="proc-wide-left">
+    <h2 class="proc-title-lg">3. 按壓方式</h2>
+    <ul class="teach-list">
+      <li>雙手交疊，扣住五指</li>
+      <li>掌根對準兩乳頭連線中點</li>
+    </ul>
+    <p class="auto-jump">
+      畫面將於
+      <span class="countdown-num" id="countdown-15">10</span>
+      秒後自動切換下一頁
+    </p>
+  </div>
+  <div class="proc-wide-right">
+    <div class="teach-img teach-img-15"></div>
+  </div>
+  <button class="btn-home proc-home" onclick="showPage('page-11')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <polyline points="9 21 9 12 15 12 15 21"/>
+    </svg>
+  </button>
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 16 — 開始按壓說明（1秒後自動進入計時）
+══════════════════════════════════════════ -->
+<section id="page-16" class="page layout-procedure-wide" style="position:relative">
+  <div class="proc-wide-left proc-wide-pink">
+    <h2 class="proc-title-xl">開始按壓</h2>
+    <p class="proc-subtitle-lg">請跟著頻率進行按壓</p>
+  </div>
+  <div class="proc-wide-right" style="background:var(--white);flex-direction:column;justify-content:center;padding:36px 32px;gap:24px">
+    <div>
+      <p class="info-stage" style="margin-bottom:10px">階段一</p>
+      <ul class="teach-list">
+        <li>持續按壓兩分鐘後</li>
+        <li>休息3秒</li>
+        <li>開始進行階段二</li>
+      </ul>
+    </div>
+    <div>
+      <p class="info-stage" style="margin-bottom:10px">階段二</p>
+      <ul class="teach-list">
+        <li>間歇性按壓為按壓15秒</li>
+        <li>休息3秒</li>
+        <li>重複進行按壓15秒休息3秒</li>
+      </ul>
+    </div>
+  </div>
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 17 — 計時：第一階段（2分鐘）
+══════════════════════════════════════════ -->
+<section id="page-17" class="page layout-timer" style="position:relative">
+  <div class="timer-left timer-left-pink">
+    <div class="timer-count" id="timer-17">00</div>
+    <p class="timer-desc">此為間歇性心肺按壓第一階段<br>持續按壓2分鐘</p>
+  </div>
+  <div class="timer-right">
+    <div class="hand-animation">
+      <div class="hand-top"></div>
+      <div class="hand-lines"></div>
+      <div class="hand-bottom"></div>
+    </div>
+  </div>
+  <button class="btn-home proc-home" onclick="showPage('page-11')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <polyline points="9 21 9 12 15 12 15 21"/>
+    </svg>
+  </button>
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 18 — 休息（第一階段結束）
+══════════════════════════════════════════ -->
+<section id="page-18" class="page layout-rest">
+  <div class="rest-content">
+    <p class="rest-title">休息</p>
+    <p class="rest-main">3秒後繼續按壓</p>
+  </div>
+  <div class="progress-dots progress-dots-white progress-dots-vert">
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white"></div>
+    <div class="dot dot-white"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 19 — 計時：第二階段（15秒）
+══════════════════════════════════════════ -->
+<section id="page-19" class="page layout-timer" style="position:relative">
+  <div class="timer-left timer-left-pink">
+    <p class="timer-label">按壓計時</p>
+    <div class="timer-count" id="timer-19">00</div>
+    <p class="timer-desc">此為間歇性心肺按壓第二階段<br>按壓15秒休息3秒</p>
+  </div>
+  <div class="timer-right">
+    <div class="hand-animation phase2">
+      <div class="hand-top"></div>
+      <div class="hand-lines"></div>
+      <div class="hand-bottom"></div>
+    </div>
+  </div>
+  <button class="btn-home proc-home" onclick="showPage('page-11')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <polyline points="9 21 9 12 15 12 15 21"/>
+    </svg>
+  </button>
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 20 — 休息（第二階段間歇）
+══════════════════════════════════════════ -->
+<section id="page-20" class="page layout-rest">
+  <div class="rest-content">
+    <p class="rest-title">休息</p>
+    <p class="rest-main">3秒後繼續按壓</p>
+  </div>
+  <div class="progress-dots progress-dots-white progress-dots-vert">
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 21 — 計時：第二階段（再次）
+══════════════════════════════════════════ -->
+<section id="page-21" class="page layout-timer" style="position:relative">
+  <div class="timer-left timer-left-pink">
+    <p class="timer-label">按壓計時</p>
+    <div class="timer-count" id="timer-21">00</div>
+    <p class="timer-desc">此為間歇性心肺按壓第二階段<br>按壓15秒休息3秒</p>
+  </div>
+  <div class="timer-right">
+    <div class="hand-animation phase2">
+      <div class="hand-top"></div>
+      <div class="hand-lines"></div>
+      <div class="hand-bottom"></div>
+    </div>
+  </div>
+  <button class="btn-home proc-home" onclick="showPage('page-11')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <polyline points="9 21 9 12 15 12 15 21"/>
+    </svg>
+  </button>
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 22 — 休息
+══════════════════════════════════════════ -->
+<section id="page-22" class="page layout-rest">
+  <div class="rest-content">
+    <p class="rest-title">休息</p>
+    <p class="rest-main">3秒後繼續按壓</p>
+  </div>
+  <div class="progress-dots progress-dots-white progress-dots-vert">
+    <div class="dot dot-white dot-active"></div><div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div><div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div><div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div><div class="dot dot-white dot-active"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 23 — 計時：第二階段（循環）
+══════════════════════════════════════════ -->
+<section id="page-23" class="page layout-timer" style="position:relative">
+  <div class="timer-left timer-left-pink">
+    <p class="timer-label">按壓計時</p>
+    <div class="timer-count" id="timer-23">00</div>
+    <p class="timer-desc">此為間歇性心肺按壓第二階段<br>按壓15秒休息3秒</p>
+  </div>
+  <div class="timer-right">
+    <div class="hand-animation phase2">
+      <div class="hand-top"></div>
+      <div class="hand-lines"></div>
+      <div class="hand-bottom"></div>
+    </div>
+  </div>
+  <button class="btn-home proc-home" onclick="showPage('page-11')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/>
+      <polyline points="9 21 9 12 15 12 15 21"/>
+    </svg>
+  </button>
+  <div class="progress-dots progress-dots-vert">
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+    <div class="dot dot-active"></div><div class="dot dot-active"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════
+     頁面 24 — 休息（循環回 page-19）
+══════════════════════════════════════════ -->
+<section id="page-24" class="page layout-rest">
+  <div class="rest-content">
+    <p class="rest-title">休息</p>
+    <p class="rest-main">3秒後繼續按壓</p>
+  </div>
+  <div class="progress-dots progress-dots-white progress-dots-vert">
+    <div class="dot dot-white dot-active"></div><div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div><div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div><div class="dot dot-white dot-active"></div>
+    <div class="dot dot-white dot-active"></div><div class="dot dot-white dot-active"></div>
+  </div>
+</section>
+
+<script src="script.js"></script>
+</body>
+</html>
