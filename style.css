@@ -1002,3 +1002,46 @@ button { cursor: pointer; font-family: var(--font); border: none; outline: none;
 #page-23 .timer-count {
   display: none !important; /* 強制不顯示倒數數字 */
 }
+
+CSS
+/* ═══════════════════════════════════════════════
+   終極物理破壞外掛：強制拔除 iOS 全網頁邊界所有限制
+═══════════════════════════════════════════════ */
+
+/* 1. 轟炸所有層級的根節點，強制寬度徹底釋放 */
+html, body, #app, .app-container, main, container {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 2. 轟炸每一頁的獨立貨櫃，強制百分之百死貼手機實體邊框 */
+.page, 
+#page-1, #page-2, #page-3, #page-4, #page-5, #page-6, #page-7, #page-8, #page-9, #page-10,
+#page-11, #page-12, #page-13, #page-14-1, #page-14-2, #page-15, #page-16,
+#page-17, #page-18, #page-19, #page-20, #page-21, #page-22, #page-23, #page-24 {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 100% !important;
+  height: 100vh !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  box-sizing: border-box !important;
+}
+
+/* 3. 如果你的網頁外層有用一個大 div（例如 class="wrapper" 或 "main-layout"）包起來 */
+div[class*="container"], div[class*="wrapper"], div[class*="layout"], div[class*="main"] {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+}
