@@ -429,46 +429,85 @@ button { cursor: pointer; font-family: var(--font); border: none; outline: none;
 .end-bottom .btn-outline-red { flex: 1; }
 
 /* ═══════════════════════════════════════════════
-   Page 11 — Main CPR (獨立的垂直置中佈局)
+   Page 11 — Main CPR (欄位對調完全體：側邊欄精準移至右側)
 ═══════════════════════════════════════════════ */
-.layout-main-container {
+#page-11.layout-main-container {
+  position: fixed !important;
+  inset: 0 !important;
+  width: 100% !important;
+  height: 100vh !important;
   background: var(--bg);
-  align-items: center; /* 左右雙欄垂直置中 */
-  flex-direction: row-reverse ;
+  
+  /* ─── 終極修正 1：強制灌入 Flex 引擎，並搭配你的 row-reverse 達成換邊 ─── */
+  display: none !important; 
+  align-items: center !important; 
+  flex-direction: row-reverse !important; 
 }
-.layout-main-container .main-sidebar {
-  width: 72px; height: 100%; background: var(--white);
-  display: flex; flex-direction: column; align-items: center; justify-content: center; /* 圖標垂直置中 */
-  padding: 24px 0; gap: 24px; box-shadow: -2px 0 12px rgba(0,0,0,0.06); z-index: 2;
+
+/* 只有當這一頁被 active 啟動時，才爆發 flex 排列 */
+#page-11.layout-main-container.active {
+  display: flex !important;
 }
-.layout-main-container .sidebar-icon {
+
+#page-11 .main-sidebar {
+  width: 72px; 
+  height: 100%; 
+  background: var(--white);
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  padding: 24px 0; 
+  gap: 24px; 
+  box-shadow: -2px 0 12px rgba(0,0,0,0.06); /* 你的完美設定：陰影朝左 */
+  z-index: 2;
+}
+
+#page-11 .sidebar-icon {
   width: 44px; height: 44px; border-radius: var(--radius-sm); background: transparent; color: var(--gray-mid);
   display: flex; align-items: center; justify-content: center; transition: background 0.15s, color 0.15s;
 }
-.layout-main-container .sidebar-icon svg { width: 22px; height: 22px; }
-.layout-main-container .sidebar-icon:active { background: var(--pink-bg); color: var(--red); }
+#page-11 .sidebar-icon svg { width: 22px; height: 22px; }
+#page-11 .sidebar-icon:active { background: var(--pink-bg); color: var(--red); }
 
-.layout-main-container .main-content {
-  flex: 1; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; /* 右側內容垂直置中 */
-  gap: 20px; z-index: 2;
+#page-11 .main-content {
+  flex: 1; 
+  height: 100%; 
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  justify-content: center; 
+  gap: 20px; 
+  z-index: 2;
 }
-.layout-main-container .cpr-circle {
+
+#page-11 .cpr-circle {
   width: clamp(160px, 38vw, 240px); height: clamp(160px, 38vw, 240px); border-radius: 50%; background: var(--red); color: var(--white);
   display: flex; flex-direction: column; align-items: center; justify-content: center;
   box-shadow: 0 0 0 12px rgba(224,32,32,0.12), 0 0 0 24px rgba(224,32,32,0.06); border: none;
   transition: transform 0.15s, box-shadow 0.15s; animation: pulse-ring 2.4s ease-in-out infinite;
 }
-.layout-main-container .cpr-circle:active { transform: scale(0.93); box-shadow: 0 0 0 6px rgba(224,32,32,0.14); }
+#page-11 .cpr-circle:active { transform: scale(0.93); box-shadow: 0 0 0 6px rgba(224,32,32,0.14); }
+
 @keyframes pulse-ring {
   0%, 100% { box-shadow: 0 0 0 12px rgba(224,32,32,0.12), 0 0 0 24px rgba(224,32,32,0.06); }
   50%       { box-shadow: 0 0 0 18px rgba(224,32,32,0.16), 0 0 0 36px rgba(224,32,32,0.04); }
 }
-.layout-main-container .cpr-big { font-size: clamp(32px, 7vw, 52px); font-weight: 900; letter-spacing: 0.04em; }
-.layout-main-container .cpr-small { font-size: 11px; font-weight: 500; opacity: 0.85; letter-spacing: 0.06em; margin-top: 4px; }
-.layout-main-container .main-hint { font-size: 13px; color: var(--gray-mid); letter-spacing: 0.04em; }
-.layout-main-container .main-blob {
-  position: absolute; bottom: -120px; right: -100px; width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(224,32,32,0.08) 0%, transparent 70%); border-radius: 50%; pointer-events: none;
+
+#page-11 .cpr-big { font-size: clamp(32px, 7vw, 52px); font-weight: 900; letter-spacing: 0.04em; }
+#page-11 .cpr-small { font-size: 11px; font-weight: 500; opacity: 0.85; letter-spacing: 0.06em; margin-top: 4px; }
+#page-11 .main-hint { font-size: 13px; color: var(--gray-mid); letter-spacing: 0.04em; }
+
+#page-11 .main-blob {
+  position: absolute; 
+  bottom: -120px; 
+  /* ─── 終極修正 2：既然側邊欄去右邊了，背景紅色漸層球我們改到「左邊」，視覺配重才會完美 ─── */
+  left: -100px; 
+  width: 400px; 
+  height: 400px;
+  background: radial-gradient(circle, rgba(224,32,32,0.08) 0%, transparent 70%); 
+  border-radius: 50%; 
+  pointer-events: none;
 }
 
 /* ═══════════════════════════════════════════════
